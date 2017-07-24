@@ -12,11 +12,11 @@ void ATankPlayerController::BeginPlay()
 
 	if (!controllerTank)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Controller not possesing a tank "))
+		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController not possesing a tank "))
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Controller possesing: %s"), *(controllerTank->GetName()))
+		UE_LOG(LogTemp, Warning, TEXT("TankPlayerController possesing: %s"), *(controllerTank->GetName()))
 	}
 	
 }
