@@ -9,6 +9,8 @@
 // FD
 class UTankBarrel; 
 class UTankAimingComponent;
+class UTankMovementComponent;
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -17,10 +19,15 @@ class BATTLETANK_API ATank : public APawn
 
 protected:
 
-	UTankAimingComponent* TankAimingComponent = nullptr;
 	
-public:
 
+public:
+	UTankAimingComponent* TankAimingComponent = nullptr;
+
+	UPROPERTY(BlueprintReadOnly)
+	UTankMovementComponent* TankMovementComponent = nullptr;
+
+	UTankBarrel* Barrel = nullptr;
 	void AimAt(FVector hitLocation);
 
 	// Sets default values for this pawn's properties
@@ -32,7 +39,7 @@ public:
 	
 
 	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(UInputComponent* InputComponent) override;
+	virtual void SetupPlayerInputComponent(UInputComponent* inputComponent) override;
 
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetBarrelReference(UTankBarrel* BarrelToSet);
@@ -40,7 +47,30 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	void SetTurretReference(UTankTurret* TurretToSet);
 
-	UPROPERTY(EditAnywhere, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = Firing)
+	void Fire();
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
 	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+	
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	float ReloadTimeInSeconds = 3;
+
+	double LastFireTime = 0;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	int testProp = 1;
+
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	int testProp2 = 2;
+	
+	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	int testProp3 = 3;
+		
+	UFUNCTION(BlueprintCallable, Category = Test)
+	void TestFunc();
 	
 };
