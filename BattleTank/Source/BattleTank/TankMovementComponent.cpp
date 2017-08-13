@@ -17,33 +17,34 @@ void UTankMovementComponent::Initialise(UTankTrack* LeftTrackToSet, UTankTrack* 
 
 void UTankMovementComponent::IntentMoveForward(float Throw)
 {
-	//auto name = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("Intent move forward throw: %f"), Throw)
-
 	LeftTrack->SetTrackThrottle(Throw);
 	RightTrack->SetTrackThrottle(Throw);
 }
 void UTankMovementComponent::IntentMoveBack(float Throw)
 {
-	//auto name = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("Intent move forward throw: %f"), Throw)
-
 	LeftTrack->SetTrackThrottle(-Throw);
 	RightTrack->SetTrackThrottle(-Throw);
 }
 void UTankMovementComponent::IntentTurnRight(float Throw)
 {
-	//auto name = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("Intent move forward throw: %f"), Throw)
-
 	LeftTrack->SetTrackThrottle(Throw);
 	RightTrack->SetTrackThrottle(-Throw);
 }
 void UTankMovementComponent::IntentTurnLeft(float Throw)
 {
-	//auto name = GetName();
-	//UE_LOG(LogTemp, Warning, TEXT("Intent move forward throw: %f"), Throw)
-
 	LeftTrack->SetTrackThrottle(-Throw);
 	RightTrack->SetTrackThrottle(Throw);
+}
+
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed)
+{
+	auto TankForward = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto AIForwardIntention = MoveVelocity.GetSafeNormal();
+
+	auto ForwardThrow = FVector::DotProduct(TankForward, AIForwardIntention);
+	IntentMoveForward(ForwardThrow);
+
+	auto RightThrow = FVector::CrossProduct(TankForward, AIForwardIntention).Z;
+	IntentTurnRight(RightThrow);
+	
 }

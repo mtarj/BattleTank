@@ -26,6 +26,8 @@ void ATankAIController::Tick(float DeltaTime)
 	if (PlayerTank)
 	{
 		
+		MoveToActor(PlayerTank, AcceptanceRadius);
+		
 		ControllerTank->AimAt(PlayerTank->GetActorLocation());
 		ControllerTank->Fire();
 		//UE_LOG(LogTemp, Warning, TEXT("ATankPlayerController ticking"))

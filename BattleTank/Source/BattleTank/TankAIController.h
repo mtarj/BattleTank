@@ -23,6 +23,8 @@ public:
 	virtual void Tick(float DeltaSeconds) override;
 	void BeginPlay() override;
 
+	UPROPERTY(EditDefaultsOnly)
+	float AcceptanceRadius = 3000;
 
 private:
 	
