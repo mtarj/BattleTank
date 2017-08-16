@@ -1,7 +1,6 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "BattleTank.h"
-#include "TankAimingComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "Tank.h"
@@ -25,18 +24,11 @@ void ATank::BeginPlay()
 
 	UE_LOG(LogTemp, Warning, TEXT("donkey: ATank c++ BeginPlay"))
 
-		TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+	
 }
 
 
-void  ATank::AimAt(FVector hitLocation)
-{
-	if (!ensure(TankAimingComponent))
-	{
-		return;
-	}
-	TankAimingComponent->AimAt(hitLocation, LaunchSpeed);
-}
+
 
 
 

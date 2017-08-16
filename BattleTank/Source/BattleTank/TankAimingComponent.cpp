@@ -40,7 +40,7 @@ void UTankAimingComponent::TickComponent( float DeltaTime, ELevelTick TickType, 
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector hitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector hitLocation)
 {
 	FVector out_LaunchVelocity;
 	FVector startLocation = Barrel->GetSocketLocation(FName("projectile"));

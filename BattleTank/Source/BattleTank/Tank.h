@@ -8,7 +8,6 @@
 
 // FD
 class UTankBarrel; 
-class UTankAimingComponent;
 class AProjectile;
 
 UCLASS()
@@ -21,11 +20,10 @@ protected:
 	
 
 public:
-	UPROPERTY(BlueprintReadOnly)
-		UTankAimingComponent* TankAimingComponent = nullptr;
+
 	
 
-	void AimAt(FVector hitLocation);
+	
 
 	// Sets default values for this pawn's properties
 	ATank();
