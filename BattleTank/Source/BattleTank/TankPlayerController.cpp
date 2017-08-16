@@ -2,6 +2,7 @@
 
 #include "BattleTank.h"
 #include "Tank.h"
+#include "TankAimingComponent.h"
 #include "TankPlayerController.h"
 
 
@@ -9,6 +10,12 @@ void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	auto AimingComponent = GetControllerTank()->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent))
+	{
+		FoundAimingComponent(AimingComponent);
+	}
+
 }
 
 ATank* ATankPlayerController::GetControllerTank() const
@@ -27,7 +34,7 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 void ATankPlayerController::AimTowarsCrosshair()
 {
-	if (!GetControllerTank())
+	if (!ensure(GetControllerTank()))
 	{
 		return;
 	}

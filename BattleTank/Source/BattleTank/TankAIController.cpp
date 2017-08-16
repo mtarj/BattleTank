@@ -23,7 +23,7 @@ void ATankAIController::Tick(float DeltaTime)
 	auto PlayerTank = Cast<ATank>(GetWorld()->GetFirstPlayerController()->GetPawn());
 	auto ControllerTank = Cast<ATank>(GetPawn());
 
-	if (PlayerTank)
+	if (ensure(PlayerTank && ControllerTank))
 	{
 		
 		MoveToActor(PlayerTank, AcceptanceRadius);

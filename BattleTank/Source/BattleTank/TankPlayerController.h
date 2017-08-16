@@ -8,6 +8,7 @@
 
 // FD
 class ATank;
+class UTankAimingComponent;
 /**
  * 
  */
@@ -19,12 +20,19 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 
 	
 public:
-	ATank* GetControllerTank() const;
 
 	void BeginPlay() override;
 
 	// Called every frame
 	virtual void Tick(float DeltaSeconds) override;
+
+protected:
+	UFUNCTION(BlueprintCallable, Category = "Setup")
+	ATank* GetControllerTank() const;
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
+	void FoundAimingComponent(UTankAimingComponent* AimingCompRef);
+
 private:
 	void AimTowarsCrosshair();
 	bool GetSightRayHitLocation(FVector& out_hitLocation) const;

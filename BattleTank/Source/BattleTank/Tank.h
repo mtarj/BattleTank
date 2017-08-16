@@ -9,7 +9,6 @@
 // FD
 class UTankBarrel; 
 class UTankAimingComponent;
-class UTankMovementComponent;
 class AProjectile;
 
 UCLASS()
@@ -22,55 +21,46 @@ protected:
 	
 
 public:
-	UTankAimingComponent* TankAimingComponent = nullptr;
-
 	UPROPERTY(BlueprintReadOnly)
-	UTankMovementComponent* TankMovementComponent = nullptr;
+		UTankAimingComponent* TankAimingComponent = nullptr;
+	
 
-	UTankBarrel* Barrel = nullptr;
 	void AimAt(FVector hitLocation);
 
 	// Sets default values for this pawn's properties
 	ATank();
 
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+
+	void BeginPlay() override;
 	
 	
 
-	// Called to bind functionality to input
-	virtual void SetupPlayerInputComponent(UInputComponent* inputComponent) override;
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetBarrelReference(UTankBarrel* BarrelToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Setup)
-	void SetTurretReference(UTankTurret* TurretToSet);
-
-	UFUNCTION(BlueprintCallable, Category = Firing)
+	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire();
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float LaunchSpeed = 4000;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 	
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	float ReloadTimeInSeconds = 3;
 
 	double LastFireTime = 0;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int testProp = 1;
 
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int testProp2 = 2;
 	
-	UPROPERTY(EditDefaultsOnly, Category = Setup)
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int testProp3 = 3;
 		
-	UFUNCTION(BlueprintCallable, Category = Test)
+	UFUNCTION(BlueprintCallable, Category = "Test")
 	void TestFunc();
-	
+private:
+
+	UTankBarrel* Barrel = nullptr; // TODO REMOVE
 };

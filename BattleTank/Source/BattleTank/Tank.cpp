@@ -2,7 +2,6 @@
 
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "Tank.h"
@@ -15,46 +14,31 @@ ATank::ATank()
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
 
-	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
-	//TankMovementComponent = CreateDefaultSubobject<UTankMovementComponent>(FName("Movement Component"));
-	
+	UE_LOG(LogTemp, Warning, TEXT("donkey: ATank c++ Construct"))
 
 }
 
-// Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
+	// Call the base class  
 	Super::BeginPlay();
-	
+
+	UE_LOG(LogTemp, Warning, TEXT("donkey: ATank c++ BeginPlay"))
+
+		TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
-
-
-// Called to bind functionality to input
-void ATank::SetupPlayerInputComponent(UInputComponent* inputComponent)
-{
-	Super::SetupPlayerInputComponent(inputComponent);
-
-}
 
 void  ATank::AimAt(FVector hitLocation)
 {
+	if (!ensure(TankAimingComponent))
+	{
+		return;
+	}
 	TankAimingComponent->AimAt(hitLocation, LaunchSpeed);
 }
 
-void ATank::SetBarrelReference(UTankBarrel* BarrelToSet)
-{
-	TankAimingComponent->SetBarrelReference(BarrelToSet);
-	Barrel = BarrelToSet;
-	
 
-}
-void ATank::SetTurretReference(UTankTurret* TurretToSet)
-{
-	TankAimingComponent->SetTurretReference(TurretToSet);
-
-
-}
 
 void ATank::Fire()
 {
@@ -64,10 +48,15 @@ void ATank::Fire()
 	// DEBUG - Stop Firing
 	return;
 
+	if (!ensure(Barrel))
+	{
+		return;
+	}
+
 
 	bool isReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
 
-	if (Barrel && isReloaded)
+	if (isReloaded)
 	{
 		// spawn projective in socket in barrel
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
